@@ -1,1 +1,1 @@
-# bank-project-training-
+# bank-project-training
