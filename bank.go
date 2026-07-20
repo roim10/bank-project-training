@@ -59,7 +59,17 @@ func (bs *BankStorage) Transfer(FromID string, ToID string, amount float64) (err
 	}
 	_, err = account2.Deposit(amount)
 	if err != nil {
+		_, _ = account1.Deposit(amount)
 		return err
 	}
 	return nil
+}
+func (bs *BankStorage) TotalBalance() float64 {
+	bs.Rmu.RLock()
+	defer bs.Rmu.RUnlock()
+	var total float64
+	for _, account := range bs.storage {
+		total += account.GetBalance()
+	}
+	return total
 }
